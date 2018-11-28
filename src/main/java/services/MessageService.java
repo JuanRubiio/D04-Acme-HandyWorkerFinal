@@ -26,6 +26,8 @@ public class MessageService {
 	private ActorService		actorService;
 	@Autowired
 	private MessageBoxService	messageBoxService;
+	@Autowired
+	private UtilitiesService	utilitiesService;
 
 
 	public Message create() {
@@ -69,6 +71,12 @@ public class MessageService {
 		messageBox = this.messageBoxService.findSystemMessageBox("out box");
 
 		Assert.notNull(message);
+		if (this.utilitiesService.checkSpam(message.getBody()) || this.utilitiesService.checkSpam(message.getSubject()) || this.utilitiesService.checkSpam(message.getTags())) {
+			message.setSpam(true);
+			final Actor actor = this.actorService.getPrincipal();
+			actor.setSuspicious(true);
+			this.actorService.save(actor);
+		}
 
 		result = this.messageRepository.save(message);
 		this.messageBoxService.saveMessageInBox(result, messageBox);

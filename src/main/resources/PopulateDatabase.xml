@@ -295,6 +295,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="handyWorker2" class="domain.HandyWorker">
@@ -321,6 +322,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="administrator1" class="domain.Administrator">
@@ -340,6 +342,7 @@
 				<ref bean="messageBox4" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="administrator2" class="domain.Administrator">
@@ -359,6 +362,7 @@
 				<ref bean="messageBox16" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="referee1" class="domain.Referee">
@@ -382,6 +386,7 @@
 				<ref bean="messageBox40" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="referee2" class="domain.Referee">
@@ -405,6 +410,7 @@
 				<ref bean="messageBox44" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="customer1" class="domain.Customer">
@@ -429,6 +435,7 @@
 				<ref bean="messageBox8" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="customer2" class="domain.Customer">
@@ -453,6 +460,7 @@
 				<ref bean="messageBox12" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="customer3" class="domain.Customer">
@@ -477,6 +485,7 @@
 				<ref bean="messageBox20" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 	<bean id="sponsor1" class="domain.Sponsor">
 		<property name="name" value="Antonio" />
@@ -496,6 +505,7 @@
 				<ref bean="messageBox32" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 	<bean id="sponsor2" class="domain.Sponsor">
@@ -516,6 +526,7 @@
 				<ref bean="messageBox36" />
 			</list>
 		</property>
+		<property name="suspicious" value= "false" />
 	</bean>
 
 

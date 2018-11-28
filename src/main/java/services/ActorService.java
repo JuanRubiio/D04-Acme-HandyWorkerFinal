@@ -13,7 +13,6 @@ import repositories.ActorRepository;
 import security.LoginService;
 import domain.Actor;
 import domain.Administrator;
-import domain.Message;
 
 @Service
 @Transactional
@@ -21,9 +20,6 @@ public class ActorService {
 
 	@Autowired
 	private ActorRepository	actorRepository;
-
-	@Autowired
-	private MessageService	messageService;
 
 
 	public Collection<Actor> findAll() {
@@ -83,14 +79,20 @@ public class ActorService {
 	public Boolean isSuspicious(final Integer actorId) {
 		Boolean res = false;
 
-		final Collection<Message> mes = this.messageService.findMessagesByActorId(actorId);
+		final Actor act = this.findOne(actorId);
+		Assert.notNull(act);
+		if (act.getSuspicious())
+			res = true;
 
-		for (final Message message : mes)
-			if (message.getSpam()) {
-				res = true;
-				break;
-			}
 		return res;
+	}
+
+	public Collection<Actor> getSuspiciousActors() {
+		return this.actorRepository.getSuspiciousActors();
+	}
+
+	public Collection<Actor> getNotSuspiciousActors() {
+		return this.actorRepository.getNotSuspiciousActors();
 	}
 
 }
