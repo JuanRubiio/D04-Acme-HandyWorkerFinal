@@ -222,6 +222,7 @@ public class MessageBoxService {
 		messageBox.setMessages(mes);
 
 		this.messageboxRepository.save(messageBox);
+
 		return messageBox;
 	}
 

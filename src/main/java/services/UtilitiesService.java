@@ -82,7 +82,7 @@ public class UtilitiesService {
 		spamList = this.spamService.findAll();
 
 		for (final Spam sp : spamList)
-			if (!"".equals(s))
+			if (!"".equals(s) && s != null)
 				if (s.toLowerCase().contains(sp.getSpamWords().toLowerCase())) {
 					res = true;
 					break;

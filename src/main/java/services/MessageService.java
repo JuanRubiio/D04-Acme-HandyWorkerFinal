@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
+import security.Authority;
 import domain.Actor;
-import domain.Administrator;
 import domain.Message;
 import domain.MessageBox;
 
@@ -39,6 +40,7 @@ public class MessageService {
 		result = new Message();
 		result.setSender(sender);
 		result.setDate(new Date(System.currentTimeMillis()));
+		result.setSpam(false);
 
 		return result;
 	}
@@ -71,6 +73,7 @@ public class MessageService {
 		messageBox = this.messageBoxService.findSystemMessageBox("out box");
 
 		Assert.notNull(message);
+		Assert.notNull(message.getRecipient());
 		if (this.utilitiesService.checkSpam(message.getBody()) || this.utilitiesService.checkSpam(message.getSubject()) || this.utilitiesService.checkSpam(message.getTags())) {
 			message.setSpam(true);
 			final Actor actor = this.actorService.getPrincipal();
@@ -126,8 +129,18 @@ public class MessageService {
 	}
 	public void broadcast(final Message message) {
 		Assert.notNull(message);
-		this.save(message);
-		final Administrator administrator = (Administrator) this.actorService.getPrincipal();
+
+		final Actor administrador = this.actorService.getPrincipal();
+
+		final Collection<Authority> autorities = administrador.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
+
+		if (!autorities.isEmpty())
+			for (final Authority au : autorities)
+				listAuth.add(au.getAuthority());
+
+		Assert.isTrue(listAuth.contains("ADMIN"));
+
 		final String subject = message.getSubject();
 		final String body = message.getBody();
 		final String priority = message.getPriority();
@@ -136,7 +149,7 @@ public class MessageService {
 		final Collection<Actor> actors = this.actorService.findAll();
 		final Message m = this.create();
 		MessageBox mesbox = new MessageBox();
-		m.setSender(administrator);
+		m.setSender(administrador);
 		m.setSubject(subject);
 		m.setBody(body);
 		m.setPriority(priority);
@@ -146,11 +159,13 @@ public class MessageService {
 			final Collection<MessageBox> messageBoxes = this.messageBoxService.getMessageBoxsByActor(a.getId());
 
 			for (final MessageBox met : messageBoxes)
-				if (met.equals("in box"))
+				if (met.getName().equals("in box"))
 					mesbox = met;
 
 			m.setRecipient(a);
+			this.save(m);
 			this.messageBoxService.saveMessageInBox(m, mesbox);
+
 		}
 	}
 
