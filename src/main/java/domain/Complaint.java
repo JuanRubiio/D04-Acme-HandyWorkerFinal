@@ -24,8 +24,6 @@ public class Complaint extends DomainEntity {
 	private String	attachements;
 
 
-	//external attributes
-
 	@NotBlank
 	@Pattern(regexp = "\\d{6}-[A-Z]{4}")
 	@Column(unique = true)
