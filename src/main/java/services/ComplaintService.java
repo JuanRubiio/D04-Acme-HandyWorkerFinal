@@ -50,15 +50,6 @@ public class ComplaintService {
 		return res;
 	}
 
-	public Complaint save(final Complaint complaint) {
-		Complaint res;
-		Assert.notNull(complaint);
-		res = this.complaintRepository.save(complaint);
-		Assert.notNull(res);
-
-		return res;
-	}
-
 	private List<String> creaDosUltimos() {
 		final List<String> ultimo = new ArrayList<String>();
 		ultimo.add("A");

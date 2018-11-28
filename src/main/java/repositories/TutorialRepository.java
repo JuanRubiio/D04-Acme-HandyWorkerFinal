@@ -14,4 +14,5 @@ public interface TutorialRepository extends JpaRepository<Tutorial, Integer> {
 
 	@Query("select t from Tutorial t where t.handyWorker.id=?1")
 	Collection<Tutorial> getTutorialsPerHandyWorker(Integer id);
+
 }

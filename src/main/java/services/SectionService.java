@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.SectionRepository;
 import domain.Section;
+import domain.Tutorial;
 
 @Service
 @Transactional
@@ -20,12 +21,15 @@ public class SectionService {
 	@Autowired
 	private SectionRepository	sectionRepository;
 
+	@Autowired
+	private TutorialService		tutorialService;
+
 
 	//Supporting services
-	public Section create() {
+	public Section create(final Integer tutorialId) {
 		final Section res;
 		res = new Section();
-		res.setOrden(1);
+		res.setOrden(this.numberOfSection(this.tutorialService.findOne(tutorialId)));
 
 		return res;
 
@@ -60,5 +64,11 @@ public class SectionService {
 	public void delete(final Section section) {
 		Assert.notNull(section);
 		this.sectionRepository.delete(section);
+	}
+
+	private Integer numberOfSection(final Tutorial tutorial) {
+		final Integer numeroActualSeccion = tutorial.getSections().size() + 1;
+		return numeroActualSeccion;
+
 	}
 }
