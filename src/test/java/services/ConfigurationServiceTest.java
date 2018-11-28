@@ -31,6 +31,7 @@ public class ConfigurationServiceTest extends AbstractTest {
 		Configuration configlate = new Configuration();
 		Configuration confignew = new Configuration();
 
+		super.authenticate("administrator1");
 		final String message = "HOLA";
 		final Collection<Configuration> configurations = this.configurationService.findAll();
 		for (final Configuration t : configurations)

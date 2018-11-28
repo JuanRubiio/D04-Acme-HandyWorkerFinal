@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ConfigurationRepository;
+import security.Authority;
+import domain.Actor;
 import domain.Configuration;
 
 @Service
@@ -51,6 +54,15 @@ public class ConfigurationService {
 		Configuration result;
 
 		Assert.notNull(configuration);
+		final Actor actor = this.actorService.getPrincipal();
+		final Collection<Authority> autorities = actor.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
+
+		if (!autorities.isEmpty())
+			for (final Authority au : autorities)
+				listAuth.add(au.getAuthority());
+
+		Assert.isTrue(listAuth.contains("ADMIN"));
 
 		result = this.configurationRepository.save(configuration);
 
