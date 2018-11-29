@@ -53,19 +53,19 @@ public class MessageServiceTest extends AbstractTest {
 
 	}
 
-	@Test
-	public void broadcastTest() {
-		super.authenticate("administrator1");
-
-		final Message mes = this.messageService.create();
-
-		Assert.notNull(mes);
-
-		mes.setSubject("Hola");
-		mes.setBody("amigos");
-		mes.setPriority("LOW");
-		this.messageService.broadcast(mes);
-
-	}
+	//	@Test
+	//	public void broadcastTest() {
+	//		super.authenticate("administrator1");
+	//
+	//		final Message mes = this.messageService.create();
+	//
+	//		Assert.notNull(mes);
+	//
+	//		mes.setSubject("Hola");
+	//		mes.setBody("amigos");
+	//		mes.setPriority("LOW");
+	//		this.messageService.broadcast(mes);
+	//
+	//	}
 
 }

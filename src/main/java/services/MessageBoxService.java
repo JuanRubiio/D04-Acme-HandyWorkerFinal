@@ -148,6 +148,48 @@ public class MessageBoxService {
 		return MessageBox;
 	}
 
+	public MessageBox getMessageBoxAndCheckSpam(final Message message, final Actor recipient, final Boolean broadcast) {
+		Assert.notNull(message);
+		MessageBox folder;
+		Collection<Spam> spamList;
+		final boolean isSpam = false;
+
+		spamList = this.spamService.findAll();
+
+		for (final Spam sp : spamList)
+			if (message.getBody().toLowerCase().contains(sp.getSpamWords().toLowerCase()) || message.getSubject().toLowerCase().contains(sp.getSpamWords().toLowerCase())) {
+				message.setSpam(true);
+				break;
+			}
+
+		if (isSpam) {
+			folder = this.findSystemFolderByActor("spam box", recipient.getId());
+			message.setSpam(true);
+			Actor enviador = null;
+			try {
+				enviador = message.getSender();
+				enviador.setSuspicious(true);
+				this.actorService.save(enviador);
+			} catch (final Throwable oops) {
+
+			}
+
+		} else if (broadcast)
+			folder = this.findSystemFolderByActor("notification box", recipient.getId());
+		else
+			folder = this.findSystemFolderByActor("in box", recipient.getId());
+		return folder;
+	}
+
+	private MessageBox findSystemFolderByActor(final String nameFolder, final int actorId) {
+		Assert.notNull(nameFolder);
+		MessageBox folder;
+
+		folder = this.messageboxRepository.findSystemMessageBox(nameFolder, actorId);
+		Assert.notNull(folder);
+		return folder;
+	}
+
 	public void getMessageBoxAndCheckSpam(final Message message, final Actor recipient) {
 		Assert.notNull(message);
 		MessageBox messageBox;

@@ -113,4 +113,14 @@ public class Message extends DomainEntity {
 		this.tags = tags;
 	}
 
+	@Override
+	public Message clone() {
+		Message copia = null;
+		try {
+			copia = (Message) super.clone();
+		} catch (final CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return copia;
+	}
 }

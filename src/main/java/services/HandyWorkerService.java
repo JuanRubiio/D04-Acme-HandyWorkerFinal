@@ -14,7 +14,6 @@ import org.springframework.util.Assert;
 import repositories.HandyWorkerRepository;
 import security.Authority;
 import security.UserAccount;
-import domain.Actor;
 import domain.HandyWorker;
 
 @Service
@@ -68,18 +67,15 @@ public class HandyWorkerService {
 
 	public HandyWorker save(final HandyWorker handyWorker) {
 
-		final HandyWorker res = new HandyWorker();
-		Assert.notNull(handyWorker);
-		final Actor actor = this.actorService.getPrincipal();
-		final Collection<Authority> authorities = actor.getUserAccount().getAuthorities();
-		final ArrayList<String> listAuth = new ArrayList<String>();
-		if (!authorities.isEmpty())
-			for (final Authority au : authorities)
-				listAuth.add(au.getAuthority());
-		Assert.isTrue(listAuth.contains("ADMIN"));
-		Assert.notNull(res);
+		final HandyWorker result;
 
-		return res;
+		Assert.notNull(handyWorker);
+
+		result = this.handyworkerRepository.save(handyWorker);
+
+		Assert.notNull(result);
+
+		return result;
 	}
 
 	//Creo que handyWorker no tiene delete
