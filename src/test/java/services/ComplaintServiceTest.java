@@ -30,8 +30,6 @@ public class ComplaintServiceTest extends AbstractTest {
 	@Test
 	public void createTest() {
 		final Complaint complaint = this.complaintService.create();
-		complaint.setTicker("123456-ABCD");
-		complaint.setDescription("Esta es una descripcion testing");
 		Assert.notNull(complaint);
 	}
 

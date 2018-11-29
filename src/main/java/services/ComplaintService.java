@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
-import repositories.UtilitiesRepository;
 import domain.Complaint;
 
 @Service
@@ -23,9 +22,8 @@ public class ComplaintService {
 	//Managed repo
 	@Autowired
 	private ComplaintRepository	complaintRepository;
-
-	UtilitiesRepository			utilitiesRepository;
-	UtilitiesService			utilitiesService;
+	@Autowired
+	private UtilitiesService	utilitiesService;
 
 
 	//Supporting services
@@ -33,7 +31,8 @@ public class ComplaintService {
 		final Complaint res;
 		res = new Complaint();
 		res.setMoment(new Date());
-		res.setTicker("123456-AAAA");
+		res.setTicker(this.utilitiesService.generateTicker());
+		Assert.isTrue(res.getTicker().matches("\\d{6}-[A-Z]{4}"));
 
 		return res;
 	}
