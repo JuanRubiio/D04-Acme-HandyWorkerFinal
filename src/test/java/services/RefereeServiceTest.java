@@ -27,11 +27,12 @@ public class RefereeServiceTest extends AbstractTest {
 	@Test
 	public void testSaveReferee() {
 		super.authenticate("administrator1");
-		final Referee referee = this.refereeService.create();
-		final Referee prueba = this.refereeService.save(referee);
-		final Referee refereee = this.refereeService.findOne(prueba.getId());
-		Assert.notNull(refereee);
-
-		super.authenticate(null);
+		final Referee referee;
+		Referee saved, recuperado;
+		referee = this.refereeService.create();
+		referee.setName("jose");
+		saved = this.refereeService.save(referee);
+		recuperado = this.refereeService.findOne(saved.getId());
+		Assert.isTrue(recuperado.getName() == "jose");
 	}
 }

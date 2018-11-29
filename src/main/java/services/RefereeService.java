@@ -16,6 +16,7 @@ import security.Authority;
 import security.UserAccount;
 import domain.Actor;
 import domain.Referee;
+import domain.Report;
 
 @Service
 @Transactional
@@ -27,14 +28,21 @@ public class RefereeService {
 	@Autowired
 	private ActorService		actorService;
 
-	@Autowired
-	private MessageBoxService	messageboxService;
 
-
+	/*
+	 * @Autowired
+	 * private ActorService actorService;
+	 * 
+	 * @Autowired
+	 * private MessageBoxService messageboxService;
+	 */
 	public Referee create() {
 		Referee res;
 		res = new Referee();
 		final UserAccount userAccount = new UserAccount();
+		final Actor actor = this.actorService.getPrincipal();
+		final Collection<Authority> authorities2 = actor.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
 		final List<Authority> authorities = new ArrayList<Authority>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.REFEREE);
@@ -42,36 +50,29 @@ public class RefereeService {
 		userAccount.setAuthorities(authorities);
 		res.setUserAccount(userAccount);
 
-		final Actor actor = this.actorService.getPrincipal();
-		final Collection<Authority> authoritiesa = actor.getUserAccount().getAuthorities();
-		final ArrayList<String> listAuth = new ArrayList<String>();
-		if (!authorities.isEmpty())
-			for (final Authority au : authoritiesa)
+		if (!authorities2.isEmpty())
+			for (final Authority au : authorities2)
 				listAuth.add(au.getAuthority());
 		Assert.isTrue(listAuth.contains("ADMIN"));
 		Assert.notNull(res);
+
+		final List<Report> reports = new ArrayList<Report>();
+		res.setReports(reports);
+
+		Assert.notNull(res);
+
 		//this.messageboxService.addDefaultMessageBoxs(res);
+
 		return res;
 	}
 
 	public Referee save(final Referee referee) {
-		Referee res;
+		final Referee res;
 		Assert.notNull(referee);
-		final Actor actor = this.actorService.getPrincipal();
-		final Collection<Authority> authorities = actor.getUserAccount().getAuthorities();
-		final ArrayList<String> listAuth = new ArrayList<String>();
-
-		if (!authorities.isEmpty())
-			for (final Authority au : authorities)
-				listAuth.add(au.getAuthority());
-		Assert.isTrue(listAuth.contains("ADMIN"));
-
 		res = this.refereeRepository.save(referee);
 		Assert.notNull(res);
 		return res;
-
 	}
-
 	public Collection<Referee> findAll() {
 		Collection<Referee> res;
 
@@ -92,4 +93,5 @@ public class RefereeService {
 		Assert.notNull(res);
 		return res;
 	}
+
 }
