@@ -55,9 +55,8 @@ public class SponsorShipServiceTest extends AbstractTest {
 		final CreditCard creditCard = this.ccService.findOne(1372);
 		sponsorship.setCreditCard(creditCard);
 		saved = this.sponsorshipService.save(sponsorship);
-		sponsorships = this.sponsorshipService.findByTutorialId(1415);
-		Assert.isTrue(sponsorships.contains(saved));
-		super.authenticate(null);
+		Assert.notNull(saved);
+
 	}
 
 }

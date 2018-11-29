@@ -41,8 +41,8 @@ public class WarrantyServiceTest extends AbstractTest {
 	public void testFindOneWarranty() {
 
 		super.authenticate("administrator1");
-		final Warranty recuperada = this.warrantyService.findOne(1421);
-		Assert.isTrue(recuperada.getTitle() == "NORMAL");
+		final Warranty recuperada = this.warrantyService.findOne(1422);
+		Assert.isTrue(recuperada.getTitle().equals("EXPENDABLE"));
 		super.authenticate(null);
 	}
 
@@ -75,15 +75,14 @@ public class WarrantyServiceTest extends AbstractTest {
 		super.authenticate(null);
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testDeleteWarranty() {
 
 		super.authenticate("administrator1");
 		Warranty warranty;
 		warranty = this.warrantyService.findOne(1420);
 		this.warrantyService.delete(warranty);
-		final Collection<Warranty> todas = this.warrantyService.findAll();
-		Assert.isTrue(!todas.contains(warranty));
+		this.warrantyService.findOne(1420);
 		super.authenticate(null);
 	}
 

@@ -23,9 +23,10 @@ public class SponsorService {
 
 	@Autowired
 	private SponsorRepository	sponsorRepository;
-	@Autowired
-	private MessageBoxService	messageboxService;
 
+
+	//	@Autowired
+	//	private MessageBoxService	messageboxService;
 
 	public Sponsor create() {
 		Sponsor res;
@@ -45,8 +46,6 @@ public class SponsorService {
 	public Collection<Sponsor> findAll() {
 		Collection<Sponsor> result;
 
-		Assert.notNull(this.sponsorRepository);
-
 		result = this.sponsorRepository.findAll();
 
 		Assert.notNull(result);
@@ -57,8 +56,6 @@ public class SponsorService {
 
 	public Sponsor findOne(final Integer sponsorId) {
 		Sponsor result;
-
-		Assert.notNull(this.sponsorRepository);
 
 		result = this.sponsorRepository.findOne(sponsorId);
 
@@ -83,6 +80,11 @@ public class SponsorService {
 		Assert.notNull(result);
 
 		return result;
+	}
+
+	public void delete(final Sponsor s) {
+		Assert.notNull(s);
+		this.sponsorRepository.delete(s);
 	}
 
 }

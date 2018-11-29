@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.EndorserRepository;
+import security.LoginService;
 import domain.Endorser;
 
 @Service
@@ -31,6 +32,14 @@ public class EndorserService {
 
 	}
 
+	public Endorser getPrincipal() {
+
+		final Endorser result = this.endorserRepository.getPrincipal(LoginService.getPrincipal().getId());
+		Assert.notNull(result);
+
+		return result;
+	}
+
 	public Endorser findOne(final Integer EndorserId) {
 		Endorser result;
 		Assert.notNull(EndorserId);
@@ -42,20 +51,4 @@ public class EndorserService {
 
 	}
 
-	public Endorser save(final Endorser endorser) {
-		final Endorser result = endorser;
-		Assert.notNull(endorser);
-
-		this.endorserRepository.save(endorser);
-
-		Assert.notNull(result);
-		return result;
-
-	}
-
-	public void delete(final Endorser endorser) {
-		Assert.notNull(endorser);
-		this.endorserRepository.delete(endorser);
-
-	}
 }

@@ -51,6 +51,18 @@ public class SponsorshipService {
 
 	}
 
+	public Collection<Sponsorship> findAll() {
+
+		Collection<Sponsorship> res;
+
+		res = this.sponsorshipRepository.findAll();
+
+		Assert.notNull(res);
+
+		return res;
+
+	}
+
 	public Sponsorship findOne(final Integer sponsorshipId) {
 		Sponsorship result;
 
