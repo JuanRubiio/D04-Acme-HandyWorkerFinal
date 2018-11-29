@@ -22,6 +22,9 @@ public class HandyWorkerServiceTest extends AbstractTest {
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
 
+	@Autowired
+	private MessageBoxService	messageboxService;
+
 
 	@Test
 	public void testSaveHandyWorker() {
@@ -42,5 +45,18 @@ public class HandyWorkerServiceTest extends AbstractTest {
 		super.authenticate(null);
 
 	}
+
+	//	@Test
+	//	public void addMessageBox() {
+	//		final HandyWorker handyWorker = this.handyWorkerService.create();
+	//		handyWorker.setAddress("adres");
+	//
+	//		final HandyWorker handy = this.handyWorkerService.save(handyWorker);
+	//
+	//		this.messageboxService.addDefaultMessageBoxs(handy);
+	//
+	//		handy.setMessageBoxes(this.messageboxService.getMessageBoxsByActor(handy.getId()));
+	//		final HandyWorker res = this.handyWorkerService.findOne(handy.getId());
+	//	}
 
 }

@@ -2,7 +2,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -248,11 +247,11 @@ public class MessageBoxService {
 		Assert.isTrue(actor.getId() == MessageBox.getActor().getId());
 	}
 
-	public List<MessageBox> getMessageBoxsByActor(final int actorId) {
+	public Collection<MessageBox> getMessageBoxsByActor(final int actorId) {
 		Assert.notNull(actorId);
-		final List<MessageBox> result = (List<MessageBox>) this.messageboxRepository.getMessageBoxsByActor(actorId);
+		final Collection<MessageBox> col = this.messageboxRepository.getMessageBoxsByActor(actorId);
 
-		return result;
+		return col;
 	}
 
 	public MessageBox saveMessageInBox(final Message result, final MessageBox messageBox) {

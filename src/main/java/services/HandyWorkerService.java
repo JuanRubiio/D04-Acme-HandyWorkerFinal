@@ -82,5 +82,6 @@ public class HandyWorkerService {
 	public void delete(final HandyWorker handyWorker) {
 		Assert.notNull(handyWorker);
 		this.handyworkerRepository.delete(handyWorker);
+
 	}
 }
