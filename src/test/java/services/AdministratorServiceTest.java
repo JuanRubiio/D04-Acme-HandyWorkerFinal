@@ -26,11 +26,15 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void testSaveAdministrator() {
-		super.authenticate("administrator1");
-		final Administrator administrator = this.administratorService.create();
-		final Administrator prueba = this.administratorService.save(administrator);
-		final Administrator administratorr = this.administratorService.findOne(prueba.getId());
-		Assert.notNull(administratorr);
-		super.authenticate(null);
+
+		final Administrator administrator;
+		Administrator saved, recuperado;
+		administrator = this.administratorService.create();
+		administrator.setName("pepe");
+		saved = this.administratorService.save(administrator);
+		recuperado = this.administratorService.findOne(saved.getId());
+		Assert.isTrue(recuperado.getName() == "pepe");
+
 	}
+
 }

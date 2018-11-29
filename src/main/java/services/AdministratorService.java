@@ -39,7 +39,7 @@ public class AdministratorService {
 		authority.setAuthority(Authority.ADMIN);
 		authorities.add(authority);
 		userAccount.setAuthorities(authorities);
-
+		Assert.notNull(res);
 		res.setUserAccount(userAccount);
 		//this.messageBoxService.addDefaultMessageBoxs(res);
 
