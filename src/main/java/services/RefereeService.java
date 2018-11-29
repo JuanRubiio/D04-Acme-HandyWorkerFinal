@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -33,18 +34,23 @@ public class RefereeService {
 	public Referee create() {
 		Referee res;
 		res = new Referee();
-		final Actor actor = this.actorService.getPrincipal();
 		final UserAccount userAccount = new UserAccount();
-		final Collection<Authority> authorities = actor.getUserAccount().getAuthorities();
-		final ArrayList<String> listAuth = new ArrayList<String>();
+		final List<Authority> authorities = new ArrayList<Authority>();
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.REFEREE);
+		authorities.add(authority);
+		userAccount.setAuthorities(authorities);
+		res.setUserAccount(userAccount);
 
+		final Actor actor = this.actorService.getPrincipal();
+		final Collection<Authority> authoritiesa = actor.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
 		if (!authorities.isEmpty())
-			for (final Authority au : authorities)
+			for (final Authority au : authoritiesa)
 				listAuth.add(au.getAuthority());
 		Assert.isTrue(listAuth.contains("ADMIN"));
 		Assert.notNull(res);
-		res.setUserAccount(userAccount);
-		this.messageboxService.addDefaultMessageBoxs(res);
+		//this.messageboxService.addDefaultMessageBoxs(res);
 		return res;
 	}
 
@@ -64,5 +70,26 @@ public class RefereeService {
 		Assert.notNull(res);
 		return res;
 
+	}
+
+	public Collection<Referee> findAll() {
+		Collection<Referee> res;
+
+		res = this.refereeRepository.findAll();
+
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Referee findOne(final Integer refereeId) {
+		Referee res;
+
+		Assert.notNull(refereeId);
+
+		res = this.refereeRepository.findOne(refereeId);
+
+		Assert.notNull(res);
+		return res;
 	}
 }
