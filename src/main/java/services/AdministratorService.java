@@ -15,6 +15,8 @@ import repositories.AdministratorRepository;
 import security.Authority;
 import security.UserAccount;
 import domain.Administrator;
+import domain.Customer;
+import domain.HandyWorker;
 
 @Service
 @Transactional
@@ -23,9 +25,9 @@ public class AdministratorService {
 	@Autowired
 	private AdministratorRepository	administratorRepository;
 
-	@Autowired
-	private MessageBoxService		messageBoxService;
 
+	//	@Autowired
+	//private MessageBoxService		messageBoxService;
 
 	public Administrator create() {
 		Administrator res;
@@ -39,7 +41,7 @@ public class AdministratorService {
 		userAccount.setAuthorities(authorities);
 
 		res.setUserAccount(userAccount);
-		this.messageBoxService.addDefaultMessageBoxs(res);
+		//this.messageBoxService.addDefaultMessageBoxs(res);
 
 		return res;
 	}
@@ -52,50 +54,71 @@ public class AdministratorService {
 		return res;
 	}
 
+	public Collection<Administrator> findAll() {
+		Collection<Administrator> res;
+
+		res = this.administratorRepository.findAll();
+
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Administrator findOne(final Integer administratorId) {
+		Administrator res;
+
+		Assert.notNull(administratorId);
+
+		res = this.administratorRepository.findOne(administratorId);
+
+		Assert.notNull(res);
+		return res;
+	}
+
 	//Queries del dashboard
-	public Collection<Object> query1() {
+	public List<Object> query1() {
 		return this.administratorRepository.query1();
 	}
-	public Collection<Object> query2() {
+	public List<Object> query2() {
 		return this.administratorRepository.query2();
 	}
-	public Collection<Object> query3() {
+	public List<Object> query3() {
 		return this.administratorRepository.query3();
 	}
-	public Collection<Object> query4() {
+	public List<Object> query4() {
 		return this.administratorRepository.query4();
 	}
-	public Collection<Object> query5() {
+	public Double query5() {
 		return this.administratorRepository.query5();
 	}
-	public Collection<Object> query6() {
+	public Double query6() {
 		return this.administratorRepository.query6();
 	}
-	public Collection<Object> query7() {
+	public HandyWorker query7() {
 		return this.administratorRepository.query7();
 	}
-	public Collection<Object> query8() {
+	public Double query8() {
 		return this.administratorRepository.query8();
 	}
-	public Collection<Object> query9() {
+	public Customer query9() {
 		return this.administratorRepository.query9();
 	}
-	public Collection<Object> query10() {
+	public Double query10() {
 		return this.administratorRepository.query10();
 	}
-	public Collection<Object> query11() {
+	public List<Object> query11() {
 		return this.administratorRepository.query11();
 	}
-	public Collection<Object> query12() {
+	public List<Object> query12() {
 		return this.administratorRepository.query12();
 	}
-	public Collection<Object> query13() {
+	public Double query13() {
 		return this.administratorRepository.query13();
 	}
-	public Collection<Object> query14() {
+	public Customer query14() {
 		return this.administratorRepository.query14();
 	}
-	public Collection<Object> query15() {
+	public HandyWorker query15() {
 		return this.administratorRepository.query15();
 	}
 }
