@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PersonalRecordRepository;
+import security.Authority;
+import domain.Actor;
 import domain.PersonalRecord;
 
 @Service
@@ -19,6 +22,13 @@ public class PersonalRecordService {
 	@Autowired
 	private PersonalRecordRepository	personalRecordRepository;
 
+	@Autowired
+	private ActorService				actorService;
+
+
+	public PersonalRecordService() {
+		super();
+	}
 
 	public PersonalRecord create() {
 		PersonalRecord res;
@@ -41,18 +51,40 @@ public class PersonalRecordService {
 		return result;
 
 	}
+
 	public PersonalRecord save(final PersonalRecord personalRecord) {
 		PersonalRecord result;
 
 		Assert.notNull(personalRecord);
+		final Actor a = this.actorService.getPrincipal();
+		final Collection<Authority> authorities = a.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
+
+		if (!authorities.isEmpty())
+			for (final Authority au : authorities)
+				listAuth.add(au.getAuthority());
+
+		Assert.isTrue(listAuth.contains("HANDYWORKER"));
 
 		result = this.personalRecordRepository.save(personalRecord);
+
+		Assert.notNull(result);
 		return result;
 
 	}
 
 	public void delete(final PersonalRecord personalRecord) {
 		Assert.notNull(personalRecord);
+		final Actor a = this.actorService.getPrincipal();
+		final Collection<Authority> autorities = a.getUserAccount().getAuthorities();
+
+		final ArrayList<String> listAuth = new ArrayList<String>();
+
+		if (!autorities.isEmpty())
+			for (final Authority au : autorities)
+				listAuth.add(au.getAuthority());
+
+		Assert.isTrue(listAuth.contains("HANDYWORKER"));
 		this.personalRecordRepository.delete(personalRecord);
 	}
 

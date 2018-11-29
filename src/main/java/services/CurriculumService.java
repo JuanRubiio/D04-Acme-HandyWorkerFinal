@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.CurriculumRepository;
+import security.Authority;
+import domain.Actor;
 import domain.Curriculum;
 
 @Service
@@ -85,23 +88,25 @@ public class CurriculumService {
 		return result;
 	}
 
-	public Curriculum findOne(final Integer curriculumId) {
-		Curriculum result;
-
-		Assert.notNull(curriculumId);
-
-		result = this.curriculumRepository.findOne(curriculumId);
-
-		Assert.notNull(result);
-
-		return result;
-	}
-
 	public Curriculum save(final Curriculum curriculum) {
 		Curriculum result;
 
 		Assert.notNull(curriculum);
+		Assert.notNull(curriculum.getEducationalRecords());
+		Assert.notNull(curriculum.getEndoserRecords());
+		Assert.notNull(curriculum.getMiscellaneousRecords());
+		Assert.notNull(curriculum.getProfessionalRecords());
 		Assert.notNull(curriculum.getPersonalRecord());
+
+		final Actor a = this.actorService.getPrincipal();
+		final Collection<Authority> authorities = a.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
+
+		if (!authorities.isEmpty())
+			for (final Authority au : authorities)
+				listAuth.add(au.getAuthority());
+
+		Assert.isTrue(listAuth.contains("HANDYWORKER"));
 
 		result = this.curriculumRepository.save(curriculum);
 
@@ -112,8 +117,28 @@ public class CurriculumService {
 	}
 	public void delete(final Curriculum curriculum) {
 		Assert.notNull(curriculum);
+		final Actor a = this.actorService.getPrincipal();
+		final Collection<Authority> autorities = a.getUserAccount().getAuthorities();
 
+		final ArrayList<String> listAuth = new ArrayList<String>();
+
+		if (!autorities.isEmpty())
+			for (final Authority au : autorities)
+				listAuth.add(au.getAuthority());
+
+		Assert.isTrue(listAuth.contains("HANDYWORKER"));
 		this.curriculumRepository.delete(curriculum);
+	}
+	public Curriculum findOne(final Integer curriculumId) {
+		Curriculum result;
+
+		Assert.notNull(curriculumId);
+
+		result = this.curriculumRepository.findOne(curriculumId);
+
+		Assert.notNull(result);
+
+		return result;
 
 	}
 

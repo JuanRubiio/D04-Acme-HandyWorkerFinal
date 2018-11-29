@@ -68,12 +68,12 @@ public class EducationalRecordService {
 
 		Assert.notNull(educationalRecord);
 
-		final Actor actor = this.actorService.getPrincipal();
-		final Collection<Authority> autorities = actor.getUserAccount().getAuthorities();
+		final Actor a = this.actorService.getPrincipal();
+		final Collection<Authority> authorities = a.getUserAccount().getAuthorities();
 		final ArrayList<String> listAuth = new ArrayList<String>();
 
-		if (!autorities.isEmpty())
-			for (final Authority au : autorities)
+		if (!authorities.isEmpty())
+			for (final Authority au : authorities)
 				listAuth.add(au.getAuthority());
 
 		Assert.isTrue(listAuth.contains("HANDYWORKER"));
@@ -83,7 +83,6 @@ public class EducationalRecordService {
 		Assert.notNull(result);
 
 		return result;
-
 	}
 
 	public void delete(final EducationalRecord educationalRecord) {
