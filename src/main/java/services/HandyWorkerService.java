@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
  import repositories.HandyWorkerRepository;
  import security.Authority;
  import security.UserAccount;
+import domain.Actor;
 import domain.HandyWorker;
 
  @Service
@@ -24,6 +25,9 @@ import domain.HandyWorker;
  private HandyWorkerRepository handyworkerRepository;
 
  @Autowired
+ private ActorService actorService;
+ 
+ @Autowired
  private MessageBoxService messageboxService;
 
  @Autowired
@@ -31,8 +35,8 @@ import domain.HandyWorker;
 
 
  public HandyWorker create() {
+	 
 	 HandyWorker res;
-	
 	 res = new HandyWorker();
 	 final UserAccount userAccount = new UserAccount();
 	 final List<Authority> authorities = new ArrayList<Authority>();
@@ -40,12 +44,18 @@ import domain.HandyWorker;
 	 authority.setAuthority(Authority.HANDYWORKER);
 	 authorities.add(authority);
 	 userAccount.setAuthorities(authorities);
-	
 	 res.setUserAccount(userAccount);
-	 this.messageboxService.addDefaultMessageBoxs(res);
-	
-	 res.setCurriculum(this.curriculumService.create());
-	
+	 
+	 final Actor actor = this.actorService.getPrincipal();
+	 final Collection<Authority> authoritiesa = actor.getUserAccount().getAuthorities();
+	 final ArrayList<String> listAuth = new ArrayList<String>();
+	 if(!authorities.isEmpty())
+		 for(final Authority au : authoritiesa)
+			 	listAuth.add(au.getAuthority());
+	 Assert.isTrue(listAuth.contains("ADMIN"));
+	 Assert.notNull(res);
+	 //this.messageboxService.addDefaultMessageBoxs(res);
+	 //res.setCurriculum(this.curriculumService.create());
 	 return res;
  }
  
@@ -58,16 +68,29 @@ import domain.HandyWorker;
  
  public HandyWorker findOne(final Integer handyWorkerId){
 	 HandyWorker res;
-	 Assert.notNull(res);
+	 Assert.notNull(handyWorkerId);
 	 res = this.handyworkerRepository.findOne(handyWorkerId);
+	 Assert.notNull(res);
 	 return res;
  }
  
- public void save(final HandyWorker handyWorker){
+ public HandyWorker save(final HandyWorker handyWorker){
+	 
+	 HandyWorker res = new HandyWorker();
 	 Assert.notNull(handyWorker);
-	 this.handyworkerRepository.save(handyWorker);
+	 final Actor actor = this.actorService.getPrincipal();
+	 final Collection<Authority> authorities= actor.getUserAccount().getAuthorities();
+	 final ArrayList<String> listAuth = new ArrayList<String>();
+	 if(!authorities.isEmpty())
+		 for(final Authority au : authorities)
+			 	listAuth.add(au.getAuthority());
+	 Assert.isTrue(listAuth.contains("ADMIN"));
+	 Assert.notNull(res);
+
+	 return res;
  }
  
+ //Creo que handyWorker no tiene delete
  public void delete(final HandyWorker handyWorker){
 	 Assert.notNull(handyWorker);
 	 this.handyworkerRepository.delete(handyWorker);

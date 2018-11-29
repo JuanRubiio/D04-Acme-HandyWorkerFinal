@@ -37,6 +37,7 @@ public class PhaseService {
 		return res;
 	}
 	
+	//Creo que sobra, ya que solo pone showing them, creating, updating, and deleting phases.
 	public Collection<Phase> findAll(){
 		Collection<Phase>res;
 		res = this.phaseRepository.findAll();
@@ -52,9 +53,12 @@ public class PhaseService {
 		return res;
 	}
 	
-	public void save(final Phase phase){
+	public Phase save(final Phase phase){
+		Phase res;
 		Assert.notNull(phase);
-		this.phaseRepository.save(phase);
+		res = this.phaseRepository.save(phase);
+		Assert.notNull(res);
+		return res;
 	}
 	
 	public void delete(final Phase phase){

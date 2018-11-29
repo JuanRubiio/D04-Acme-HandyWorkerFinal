@@ -18,7 +18,7 @@ import utilities.AbstractTest;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class HandyWorkerTest extends AbstractTest{
+public class HandyWorkerServiceTest extends AbstractTest{
 
 	@Autowired
 	private HandyWorkerService handyWorkerService;

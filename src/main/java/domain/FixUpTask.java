@@ -114,9 +114,6 @@ public class FixUpTask extends DomainEntity {
 	private Category				category;
 
 
-	//private Collection<Finder>		finder;
-	//private Collection<Application>		apply;
-
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)

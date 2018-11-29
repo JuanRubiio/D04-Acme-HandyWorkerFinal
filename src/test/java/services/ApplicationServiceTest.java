@@ -17,7 +17,7 @@ import utilities.AbstractTest;
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"})
 @Transactional
-public class ApplicationTest extends AbstractTest{
+public class ApplicationServiceTest extends AbstractTest{
 
 	@Autowired
 	private ApplicationService applicationService;

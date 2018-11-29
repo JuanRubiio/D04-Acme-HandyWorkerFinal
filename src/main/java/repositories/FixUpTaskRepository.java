@@ -12,13 +12,13 @@ import domain.FixUpTask;
 public interface FixUpTaskRepository extends JpaRepository<FixUpTask,Integer>{
 
 	//Puede que valga para generar el ticker, es del año pasado
-	@Query("select f from FixUpTask where f.ticker = ?1")
+	//select f from FixUpTask f where f.ticker = '181120-ABCD';
+	@Query("select f from FixUpTask f where f.ticker = ?1")
 	FixUpTask findByTicker(String ticker);
 	
-	//DashBoard
-	//Enunciado: The average, the minimum, the maximum, and the standard deviation of the number of fix-up tasks per user.
-	@Query(" select avg(c.fixUpTasks.size),min(c.fixUpTasks.size),max(c.fixUpTasks.size) from Customer c")
-	Collection<FixUpTask> fixUpTaskPerUser();
-	
-	
+	//Enunciado: Filtrar las TAREAS por los ESTADOS de un MANITAS
+	//select f from FixUpTask f join f.applications a where a.id=(select a.id from Application a where (a.handyWorker=1308 AND a.status='ACCEPTED'));
+	@Query("select f from FixUpTask f join f.applications a where a.id=(select a.id from Application a where (a.handyWorker= ?1 AND a.status='?2'))")
+	Collection<FixUpTask> ListingFixUpTaskByHandyWorker(int handyWorkerId,String status);
+
 }

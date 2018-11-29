@@ -8,4 +8,5 @@ import domain.Phase;
 @Repository
 public interface PhaseRepository extends JpaRepository<Phase,Integer>{
 
+	
 }

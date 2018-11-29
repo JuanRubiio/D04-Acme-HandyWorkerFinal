@@ -54,10 +54,14 @@ public class ApplicationService {
 		return res;
 	}
 	
-	public void save(final Application application){
+	public Application save(final Application application){
+		Application res;
 		Assert.notNull(application);
-		this.applicationRepository.save(application);
+		res = this.applicationRepository.save(application);
+		Assert.notNull(res);
+		return res;
 	}
+	
 	
 }
 
