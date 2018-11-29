@@ -28,7 +28,7 @@ public class ApplicationService {
 	private ActorService			actorService;
 
 
-	//¿Debería poner FixUpTaskService?
+	//ï¿½Deberï¿½a poner FixUpTaskService?
 
 	public Application create(final FixUpTask fixUpTask) {
 
@@ -45,7 +45,7 @@ public class ApplicationService {
 
 		Assert.isTrue(listAuth.contains("HANDYWORKER"));
 		res.setMoment(new Date());
-		//¿Hace falta meter una CreditCard?, ya que es un atributo opcional
+		//ï¿½Hace falta meter una CreditCard?, ya que es un atributo opcional
 		return res;
 	}
 

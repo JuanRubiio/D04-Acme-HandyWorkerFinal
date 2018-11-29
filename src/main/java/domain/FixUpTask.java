@@ -166,4 +166,5 @@ public class FixUpTask extends DomainEntity {
 	public void setApplications(final Collection<Application> applications) {
 		this.applications = applications;
 	}
+
 }

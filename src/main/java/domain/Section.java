@@ -19,8 +19,6 @@ public class Section extends DomainEntity {
 	private Integer	orden;
 
 
-	//	private Integer	order;
-
 	@NotBlank
 	public String getTitle() {
 		return this.title;
