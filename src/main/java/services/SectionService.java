@@ -55,6 +55,9 @@ public class SectionService {
 	public Section save(final Section section) {
 		final Section res;
 		Assert.notNull(section);
+		Assert.isTrue(section.getTitle() != "");
+		Assert.isTrue(section.getText() != "");
+		Assert.notNull(section.getOrden());
 		res = this.sectionRepository.save(section);
 		Assert.notNull(res);
 
@@ -69,6 +72,5 @@ public class SectionService {
 	private Integer numberOfSection(final Tutorial tutorial) {
 		final Integer numeroActualSeccion = tutorial.getSections().size() + 1;
 		return numeroActualSeccion;
-
 	}
 }

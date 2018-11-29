@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.TutorialRepository;
+import domain.HandyWorker;
 import domain.Tutorial;
 
 @Service
@@ -25,11 +26,11 @@ public class TutorialService {
 
 
 	//Supporting services
-	public Tutorial create() {
-		final Tutorial res;
-		res = new Tutorial();
+	public Tutorial create(final HandyWorker handyWorker) {
+		final Tutorial res = new Tutorial();
 		Assert.isTrue(this.actorService.getPrincipal().getUserAccount().getAuthorities().contains("HANDYWORKER"));
-		//res.setHandyWorker(this.actorService.getPrincipal());
+		Assert.notNull(handyWorker);
+		res.setHandyWorker(handyWorker);
 		res.setMomentCreate(new Date());
 		return res;
 	}

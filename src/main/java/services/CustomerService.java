@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.CustomerRepository;
+import security.Authority;
+import security.UserAccount;
+import domain.Actor;
 import domain.Customer;
 
 @Service
@@ -20,13 +25,30 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository	customerRepository;
 
+	@Autowired
+	private ActorService		actorService;
+
 
 	//Supporting services
 	public Customer create() {
-		final Customer res;
+		Customer res;
 		res = new Customer();
-		//set
+		final UserAccount userAccount = new UserAccount();
+		final List<Authority> authorities = new ArrayList<Authority>();
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.CUSTOMER);
+		authorities.add(authority);
+		userAccount.setAuthorities(authorities);
+		res.setUserAccount(userAccount);
 
+		final Actor actor = this.actorService.getPrincipal();
+		final Collection<Authority> authoritiesa = actor.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
+		if (!authorities.isEmpty())
+			for (final Authority au : authoritiesa)
+				listAuth.add(au.getAuthority());
+		Assert.notNull(res);
+		//this.messageboxService.addDefaultMessageBoxs(res);
 		return res;
 	}
 
@@ -48,12 +70,22 @@ public class CustomerService {
 	}
 
 	public Customer save(final Customer customer) {
-		final Customer res;
+		Customer res;
 		Assert.notNull(customer);
+		//Assert.isTrue(customer.getName() != "");
+		//Assert.isTrue(customer.getSurname() != "");
+		final Actor actor = this.actorService.getPrincipal();
+		final Collection<Authority> authorities = actor.getUserAccount().getAuthorities();
+		final ArrayList<String> listAuth = new ArrayList<String>();
+
+		if (!authorities.isEmpty())
+			for (final Authority au : authorities)
+				listAuth.add(au.getAuthority());
+
 		res = this.customerRepository.save(customer);
 		Assert.notNull(res);
-
 		return res;
+
 	}
 
 	public void delete(final Customer customer) {
