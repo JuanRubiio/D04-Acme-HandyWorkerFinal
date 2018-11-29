@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ComplaintRepository;
+import repositories.UtilitiesRepository;
 import domain.Complaint;
 
 @Service
@@ -21,7 +24,8 @@ public class ComplaintService {
 	@Autowired
 	private ComplaintRepository	complaintRepository;
 
-	private UtilitiesService	utilitiesService;
+	UtilitiesRepository			utilitiesRepository;
+	UtilitiesService			utilitiesService;
 
 
 	//Supporting services
@@ -58,5 +62,25 @@ public class ComplaintService {
 		Assert.notNull(res);
 
 		return res;
+	}
+
+	private Integer obtieneIdQuejaSinReferee() {
+		final List<Integer> complaintsConReferee = new ArrayList<Integer>();
+		final List<Integer> complaintsDelSistema = new ArrayList<Integer>();
+		int res = 0;
+
+		complaintsConReferee.addAll(this.complaintRepository.idQuejasConReferee());
+		complaintsDelSistema.addAll(this.complaintRepository.idTodasLasQuejas());
+
+		complaintsDelSistema.removeAll(complaintsConReferee);
+		res = complaintsDelSistema.get(0);
+
+		return res;
+	}
+
+	public Complaint obtieneQuejaSinReferee() {
+		final Complaint complaint = this.complaintRepository.findOne(this.obtieneIdQuejaSinReferee());
+		Assert.notNull(complaint);
+		return complaint;
 	}
 }
