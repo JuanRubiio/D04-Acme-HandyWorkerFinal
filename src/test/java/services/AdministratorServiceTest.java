@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import repositories.AdministratorRepository;
 import utilities.AbstractTest;
 import domain.Administrator;
 
@@ -22,8 +21,6 @@ import domain.Administrator;
 public class AdministratorServiceTest extends AbstractTest {
 
 	@Autowired
-	private AdministratorRepository	administratorRepository;
-	@Autowired
 	private AdministratorService	administratorService;
 
 
@@ -32,7 +29,7 @@ public class AdministratorServiceTest extends AbstractTest {
 		super.authenticate("administrator1");
 		final Administrator administrator = this.administratorService.create();
 		final Administrator prueba = this.administratorService.save(administrator);
-		final Administrator administratorr = this.administratorRepository.findOne(administrator.getId());
+		final Administrator administratorr = this.administratorService.findOne(prueba.getId());
 		Assert.notNull(administratorr);
 		super.authenticate(null);
 	}
