@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import repositories.RefereeRepository;
 import utilities.AbstractTest;
 import domain.Referee;
 
@@ -22,10 +21,7 @@ import domain.Referee;
 public class RefereeServiceTest extends AbstractTest {
 
 	@Autowired
-	private RefereeService		refereeService;
-
-	@Autowired
-	private RefereeRepository	refereeRepository;
+	private RefereeService	refereeService;
 
 
 	@Test
@@ -33,7 +29,7 @@ public class RefereeServiceTest extends AbstractTest {
 		super.authenticate("administrator1");
 		final Referee referee = this.refereeService.create();
 		final Referee prueba = this.refereeService.save(referee);
-		final Referee refereee = this.refereeRepository.findOne(prueba.getId());
+		final Referee refereee = this.refereeService.findOne(prueba.getId());
 		Assert.notNull(refereee);
 
 		super.authenticate(null);
