@@ -44,12 +44,4 @@ public class CreditCardServiceTest extends AbstractTest {
 		Assert.isTrue(this.creditCardService.findOne(1372).getBrandName() == "MASTER");
 	}
 
-	@Test
-	public void deleteTest() {
-		CreditCard creditCard = new CreditCard();
-		creditCard = this.creditCardService.findOne(1372);
-		this.creditCardService.delete(creditCard);
-		Assert.isTrue(!(this.creditCardService.findAll().contains(creditCard)));
-	}
-
 }

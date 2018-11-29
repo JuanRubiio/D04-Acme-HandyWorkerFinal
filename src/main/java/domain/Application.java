@@ -84,7 +84,7 @@ public class Application extends DomainEntity {
 	}
 
 	@Valid
-	@OneToOne(optional = true)
+	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}

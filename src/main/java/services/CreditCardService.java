@@ -19,6 +19,7 @@ public class CreditCardService {
 	//Managed repo
 	@Autowired
 	private CreditCardRepository	creditCardRepository;
+	private ApplicationService		applicationService;
 
 
 	//Supporting services
@@ -58,10 +59,5 @@ public class CreditCardService {
 		Assert.notNull(res);
 
 		return res;
-	}
-
-	public void delete(final CreditCard creditCard) {
-		Assert.notNull(creditCard);
-		this.creditCardRepository.delete(creditCard);
 	}
 }
