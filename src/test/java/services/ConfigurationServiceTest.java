@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -50,4 +51,10 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 	}
 
+	@Test
+	public void testSpanishWords() {
+
+		final List<String> res = this.configurationService.getPositiveWords();
+		Assert.isTrue(!res.isEmpty());
+	}
 }

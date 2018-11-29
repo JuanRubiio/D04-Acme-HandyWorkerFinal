@@ -2,7 +2,9 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -69,6 +71,36 @@ public class ConfigurationService {
 		Assert.notNull(result);
 
 		return result;
+	}
+
+	public List<String> getPositiveWords() {
+		final String positiveWords;
+		Configuration configlate = new Configuration();
+		final Collection<Configuration> configurations = this.configurationRepository.findAll();
+		for (final Configuration t : configurations)
+			if (configurations.size() == 1)
+				configlate = t;
+
+		positiveWords = configlate.getPositiveSpanishWords() + configlate.getPositiveEnglishWords();
+
+		final List<String> list = Arrays.asList(positiveWords.split(";"));
+
+		return list;
+	}
+
+	public List<String> getNegativeWords() {
+		final String negativeWords;
+		Configuration configlate = new Configuration();
+		final Collection<Configuration> configurations = this.configurationRepository.findAll();
+		for (final Configuration t : configurations)
+			if (configurations.size() == 1)
+				configlate = t;
+
+		negativeWords = configlate.getNegativeSpanishWords() + configlate.getNegativeEnglishWords();
+
+		final List<String> list = Arrays.asList(negativeWords.split(";"));
+
+		return list;
 	}
 
 }
