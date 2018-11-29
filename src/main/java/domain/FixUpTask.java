@@ -29,6 +29,7 @@ public class FixUpTask extends DomainEntity {
 	private Date	moment;
 	private String	description;
 	private String	address;
+	private Double	minPrice;
 	private Double	maxPrice;
 	private Date	maxDate;
 	private Date	minDate;
@@ -74,6 +75,16 @@ public class FixUpTask extends DomainEntity {
 	public void setAddress(final String address) {
 		this.address = address;
 	}
+	@Digits(integer = 4, fraction = 2)
+	@NotNull
+	public Double getMinPrice() {
+		return this.minPrice;
+	}
+
+	public void setMinPrice(final Double minPrice) {
+		this.minPrice = minPrice;
+	}
+
 	@Digits(integer = 4, fraction = 2)
 	@NotNull
 	public Double getMaxPrice() {

@@ -1534,6 +1534,7 @@
 		<property name="moment" value="1980/01/01 23:59:00" />
 		<property name="description" value="Pintar la fachada de la casa 2" />
 		<property name="address" value="Calle Morón(Huelva)" />
+		<property name="minPrice" value="0.00" />
 		<property name="maxPrice" value="215.00" />
 		<property name="maxDate" value="1980/01/01 12:00:00" />
 		<property name="minDate" value="1980/01/01 10:05:00" />
@@ -1557,6 +1558,7 @@
 		<property name="moment" value="1980/01/01 13:29:00" />
 		<property name="description" value="Arreglar las tejas de la casa" />
 		<property name="address" value="Calle Betis(Madrid)" />
+		<property name="minPrice" value="0.00" />
 		<property name="maxPrice" value="180.50" />
 		<property name="maxDate" value="1980/01/01 10:00:00" />
 		<property name="minDate" value="1980/01/01 13:45:00" />
@@ -1580,6 +1582,7 @@
 		<property name="moment" value="1980/01/01 08:25:00" />
 		<property name="description" value="Tirar la pared exterior abajo" />
 		<property name="address" value="Plaza Duque(Sevilla)" />
+		<property name="minPrice" value="0.00" />
 		<property name="maxPrice" value="840.69" />
 		<property name="maxDate" value="1980/01/01 17:00:00" />
 		<property name="minDate" value="1980/01/01 12:50:00" />
@@ -1603,6 +1606,7 @@
 		<property name="moment" value="1980/01/01 17:44:00" />
 		<property name="description" value="Arreglar inodoro de pisos" />
 		<property name="address" value="Calle Sevilla(Alicante)" />
+		<property name="minPrice" value="0.00" />
 		<property name="maxPrice" value="470.00" />
 		<property name="maxDate" value="1980/01/01 10:00:00" />
 		<property name="minDate" value="1980/01/01 18:45:00" />
