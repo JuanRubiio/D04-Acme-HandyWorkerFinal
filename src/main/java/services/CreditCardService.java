@@ -23,8 +23,8 @@ public class CreditCardService {
 
 	//Supporting services
 	public CreditCard create() {
-		final CreditCard res;
-		res = new CreditCard();
+		final CreditCard res = new CreditCard();
+		Assert.notNull(res);
 		return res;
 	}
 
@@ -46,9 +46,9 @@ public class CreditCardService {
 	}
 
 	public CreditCard save(final CreditCard creditCard) {
-		final CreditCard res;
+		CreditCard res = new CreditCard();
 		Assert.notNull(creditCard);
-		res = this.save(creditCard);
+		res = this.creditCardRepository.save(creditCard);
 		Assert.notNull(res);
 
 		return res;

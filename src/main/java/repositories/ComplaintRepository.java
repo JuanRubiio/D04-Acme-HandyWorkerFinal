@@ -12,10 +12,12 @@ import domain.Complaint;
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 
-	@Query("select c from Complaint c where c.fixUpTasks.customer.id = ?1")
+	@Query("select f.complaints from FixUpTask f where f.customer.id=?1")
 	Collection<Complaint> getListOfComplaintsPerCustomer(Integer id);
 
-	@Query("select c from Complaint where c.fixUpTasks.applications.handyWorker.id =?1 and c.fixUpTasks.applications.status='ACCEPTED'")
-	Collection<Complaint> getListOfComplaintsPerHandyWorker(Integer id);
+	/*
+	 * @Query("select f.applications from FixUpTask f")
+	 * Collection<Complaint> getListOfComplaintsPerHandyWorker(Integer id);
+	 */
 
 }
