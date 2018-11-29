@@ -41,6 +41,10 @@ public class ComplaintService {
 	public Complaint save(final Complaint complaint) {
 		Complaint res = new Complaint();
 		Assert.notNull(complaint);
+		Assert.notNull(complaint.getTicker());
+		Assert.isTrue(complaint.getTicker().matches("\\d{6}-[A-Z]{4}"));
+		Assert.notNull(complaint.getDescription());
+
 		res = this.complaintRepository.save(complaint);
 		Assert.notNull(res);
 

@@ -37,7 +37,7 @@ public class CreditCardServiceTest extends AbstractTest {
 		creditCard.setBrandName("MASTER");
 		creditCard.setHolderName("Holder Name");
 		creditCard.setExpiryMonth(9);
-		creditCard.setExpiryYear(2030);
+		creditCard.setExpiryYear(2020);
 		creditCard.setCvv(100);
 		creditCard.setNumber("1111111111111111");
 		this.creditCardService.save(creditCard);

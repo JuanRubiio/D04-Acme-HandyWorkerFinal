@@ -48,6 +48,12 @@ public class CreditCardService {
 	public CreditCard save(final CreditCard creditCard) {
 		CreditCard res = new CreditCard();
 		Assert.notNull(creditCard);
+		Assert.notNull(creditCard.getHolderName());
+		Assert.isTrue(creditCard.getCvv() >= 100 && creditCard.getCvv() <= 999);
+		Assert.isTrue(creditCard.getBrandName().equals("VISA") || creditCard.getBrandName().equals("MASTER") || creditCard.getBrandName().equals("DINNERS") || creditCard.getBrandName().equals("AMEX"));
+		Assert.isTrue(creditCard.getExpiryMonth() >= 1 && creditCard.getExpiryMonth() <= 12);
+		Assert.isTrue(creditCard.getExpiryYear() >= 2018);
+
 		res = this.creditCardRepository.save(creditCard);
 		Assert.notNull(res);
 
