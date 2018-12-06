@@ -13,4 +13,7 @@ public interface EndorserRepository extends JpaRepository<Endorser, Integer> {
 	@Query("select e from Sponsor e where e.userAccount.id=?1")
 	Endorser getPrincipal(Integer id);
 
+	@Query("select e.score from Endorser e where e.id=?1")
+	Endorser getScore(Integer endorserid);
+
 }

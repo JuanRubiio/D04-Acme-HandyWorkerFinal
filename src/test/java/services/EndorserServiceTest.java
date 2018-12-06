@@ -41,4 +41,25 @@ public class EndorserServiceTest extends AbstractTest {
 		Assert.isTrue(recuperado.getName().equals("David"));
 	}
 
+	@Test
+	public void testgetNumberPositiveWords() {
+
+		final Integer p = this.endorserService.getNumberOfPositiveWords(1308);
+		Assert.isTrue(p == 4);
+	}
+
+	@Test
+	public void testgetNumberNegativeWords() {
+
+		final Integer n = this.endorserService.getNumberOfNegativeWords(1308);
+		Assert.isTrue(n == 2);
+	}
+
+	@Test
+	public void testCalculateScore() {
+
+		final Double score = this.endorserService.calculateScore(1308);
+		Assert.isTrue(score == 2.0);
+	}
+
 }

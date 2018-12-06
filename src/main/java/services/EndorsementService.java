@@ -25,7 +25,7 @@ public class EndorsementService {
 	@Autowired
 	private ActorService			actorService;
 	@Autowired
-	private EndorserService			endorserService;
+	private ConfigurationService	confService;
 
 
 	public Endorsement create(final Actor a2) {
@@ -39,14 +39,12 @@ public class EndorsementService {
 			for (final Authority au : authorities)
 				listAuth.add(au.getAuthority());
 		Assert.isTrue(listAuth.contains("CUSTOMER") || listAuth.contains("HANDYWORKER"));
-		//	final Endorser e1 = this.endorserService.getPrincipal();
 		final Collection<Authority> authorities2 = a2.getUserAccount().getAuthorities();
 		final ArrayList<String> listAuth2 = new ArrayList<String>();
 		if (!authorities.isEmpty())
 			for (final Authority au : authorities2)
 				listAuth2.add(au.getAuthority());
 		Assert.isTrue(listAuth2.contains("CUSTOMER") || listAuth.contains("HANDYWORKER"));
-		//		final Endorser e2 = this.endorserService.getPrincipal();
 		result.setMoment(moment);
 		result.setWriteFrom((Endorser) a1);
 		result.setWriteTo((Endorser) a2);
@@ -62,6 +60,24 @@ public class EndorsementService {
 		Assert.notNull(result);
 
 		return result;
+	}
+
+	public Collection<String> findByWriteFromComments(final int endorserID) {
+
+		final Collection<String> res = this.endorsementRepository.findByWriteFromComments(endorserID);
+
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<String> findByWriteToComments(final int endorserID) {
+
+		final Collection<String> res = this.endorsementRepository.findByWriteToComments(endorserID);
+
+		Assert.notNull(res);
+
+		return res;
 	}
 
 	public Endorsement findOne(final Integer EndorsementId) {
@@ -108,16 +124,6 @@ public class EndorsementService {
 		Assert.isTrue(listAuth.contains("CUSTOMER") || listAuth.contains("HANDYWORKER"));
 
 		this.endorsementRepository.delete(Endorsement);
-	}
-
-	public Collection<Endorsement> findByWriteFrom(final int endorserID) {
-
-		return this.endorsementRepository.findByWriteFrom(endorserID);
-	}
-
-	public Collection<Endorsement> findByWriteTo(final int endorserID) {
-
-		return this.endorsementRepository.findByWriteTo(endorserID);
 	}
 
 }

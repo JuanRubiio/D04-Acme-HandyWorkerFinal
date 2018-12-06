@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -18,7 +20,11 @@ import domain.Endorser;
 public class EndorserService {
 
 	@Autowired
-	private EndorserRepository	endorserRepository;
+	private EndorserRepository		endorserRepository;
+	@Autowired
+	private ConfigurationService	confService;
+	@Autowired
+	private EndorsementService		endorsementService;
 
 
 	public Collection<Endorser> findAll() {
@@ -49,6 +55,40 @@ public class EndorserService {
 		Assert.notNull(result);
 		return result;
 
+	}
+
+	public Integer getNumberOfPositiveWords(final int endorserId) {
+		final Collection<String> receivedComments = this.endorsementService.findByWriteToComments(endorserId);
+		final List<String> positiveWords = this.confService.getPositiveWords();
+		Integer p = 0;
+		for (final String comment : receivedComments) {
+			final List<String> words = Arrays.asList(comment.split(" "));
+			for (final String word : words)
+				if (positiveWords.contains(word))
+					p = p + 1;
+
+		}
+		return p;
+	}
+	public Integer getNumberOfNegativeWords(final int endorserId) {
+		final Collection<String> sendedComments = this.endorsementService.findByWriteToComments(endorserId);
+		final List<String> negativeWords = this.confService.getNegativeWords();
+		Integer n = 0;
+		for (final String comment : sendedComments) {
+			final List<String> words = Arrays.asList(comment.split(" "));
+			for (final String word : words)
+				if (negativeWords.contains(word))
+					n = n + 1;
+		}
+		return n;
+	}
+
+	public Double calculateScore(final int endorserId) {
+		Double res = 0.0;
+		final Integer p = this.getNumberOfPositiveWords(endorserId);
+		final Integer n = this.getNumberOfNegativeWords(endorserId);
+		res = (double) p - n;
+		return res;
 	}
 
 }
